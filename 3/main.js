@@ -6,10 +6,16 @@ buttonElement.onclick = buscaRepositorios;
 
 function buscaRepositorios() {
     listElement.innerHTML = '';
+    var nomeElement = document.createElement('li');
+    var nomeText = document.createTextNode("carregando...");
+    
+    nomeElement.appendChild(nomeText);
+    listElement.appendChild(nomeElement);
     var user = inputElement.value;
+
     axios.get(`https://api.github.com/users/${user}/repos`)
         .then(function (response) {
-            console.log(response);
+            listElement.innerHTML = '';
             for (ret of response.data) {
                 var nomeElement = document.createElement('li');
                 var nomeText = document.createTextNode(ret.name);
@@ -18,7 +24,7 @@ function buscaRepositorios() {
             }
         })
         .catch(function (error) {
-            console.log(error);
+            listElement.innerHTML = '';
             var nomeElement = document.createElement('li');
             var nomeText = document.createTextNode(error);
 
